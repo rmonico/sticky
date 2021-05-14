@@ -87,6 +87,7 @@ def parse_command_line():
             b.add_command('new')
             with b.add_command('change'):
                 b.add_argument('group_name')
+            b.add_command('list')
 
         with b.add_command('manager'):
             b.add_command('open')
@@ -138,6 +139,7 @@ def call_dbus_method(args):
         'note.new': ('new_note', lambda args: ()),
         'group.new': ('new_group', lambda args: ()),
         'group.change': ('change_visible_note_group', lambda args: (args.group_name, )),
+        'group.list': ('get_note_group_names', lambda args: ()),
         'manager.open': ('open_manager', lambda args: ()),
         'settings.open': ('open_settings_window', lambda args: ()),
         'shortcuts.open': ('open_keyboard_shortcuts', lambda args: ()),
@@ -158,7 +160,14 @@ def call_dbus_method(args):
 
     logger.debug(f'Calling "{method_name}" with "{method_args}"')
 
-    method(*method_args)
+    result = method(*method_args)
+
+    if result:
+        if type(result) == dbus.Array:
+            for item in result:
+                print(str(item))
+        else:
+            print(str(result))
 
     return 0
 

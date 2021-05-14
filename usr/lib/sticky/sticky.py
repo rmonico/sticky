@@ -952,6 +952,11 @@ class DbusService(dbus.service.Object):
     def quit_app(self):
         self._sticky.quit_app()
 
+    @dbus.service.method(dbus_interface=names.bus_name)
+    def get_note_group_names(self):
+        return self._sticky.file_handler.get_note_group_names()
+
+
 global logger
 logger = logging.getLogger(__name__)
 logging.basicConfig(level='DEBUG')
