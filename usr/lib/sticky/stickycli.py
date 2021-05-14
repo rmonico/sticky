@@ -100,6 +100,8 @@ def parse_command_line():
 
         b.add_command('quit')
 
+        b.add_command('rofi')
+
     return parser.parse_args()
 
 
@@ -122,8 +124,25 @@ def main():
 
     logging.basicConfig(level=_to_logging_verbosity_level[args.verbosity])
 
-    call_dbus_method(args)
+    if args.command == 'rofi':
+        import subprocess
+        import os
+        import stickyrofi
 
+        title = 'Change Sticky Group'
+        subprocess.run(['rofi', '-modi', f'{title}:{stickyrofi.__file__}', '-show', f'{title}'])
+
+    else:
+        result = call_dbus_method(args)
+
+        if result != 0:
+            if type(result) == dbus.Array:
+                for item in result:
+                    print(str(item))
+            else:
+                print(str(result))
+
+    return 0
 
 def error(message, exit_code=1):
     logger.critical(message)
@@ -169,14 +188,7 @@ def call_dbus_method(args):
 
     result = method(*method_args)
 
-    if result:
-        if type(result) == dbus.Array:
-            for item in result:
-                print(str(item))
-        else:
-            print(str(result))
-
-    return 0
+    return result or 0
 
 if __name__ == '__main__':
     sys.exit(main())
