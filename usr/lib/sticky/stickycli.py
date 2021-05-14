@@ -103,9 +103,11 @@ def parse_command_line():
     return parser.parse_args()
 
 
+global logger
+logger = logging.getLogger(__name__)
+
+
 def main():
-    global logger
-    logger = logging.getLogger(__name__)
     # logging.basicConfig(level='DEBUG')
 
     args = parse_command_line()
