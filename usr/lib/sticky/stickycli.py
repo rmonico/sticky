@@ -53,7 +53,7 @@ class ArgumentParserBuilder(object):
         parent_command = parent_parser.get_default('command')
 
         if parent_command:
-            command = parent_command + '.'
+            command = parent_command + ' '
         else:
             command = ''
 
@@ -133,16 +133,16 @@ def call_dbus_method(args):
     logger.info(f'Received args={args}')
 
     _command_line_to_dbus_method_name = {
-        'note.activate': ('activate_notes', lambda args: ()),
-        'note.hide': ('hide_notes', lambda args: ()),
-        'note.toggle': ('toggle_notes', lambda args: ()),
-        'note.new': ('new_note', lambda args: ()),
-        'group.new': ('new_group', lambda args: ()),
-        'group.change': ('change_visible_note_group', lambda args: (args.group_name, )),
-        'group.list': ('get_note_group_names', lambda args: ()),
-        'manager.open': ('open_manager', lambda args: ()),
-        'settings.open': ('open_settings_window', lambda args: ()),
-        'shortcuts.open': ('open_keyboard_shortcuts', lambda args: ()),
+        'note activate': ('activate_notes', lambda args: ()),
+        'note hide': ('hide_notes', lambda args: ()),
+        'note toggle': ('toggle_notes', lambda args: ()),
+        'note new': ('new_note', lambda args: ()),
+        'group new': ('new_group', lambda args: ()),
+        'group change': ('change_visible_note_group', lambda args: (args.group_name, )),
+        'group list': ('get_note_group_names', lambda args: ()),
+        'manager open': ('open_manager', lambda args: ()),
+        'settings open': ('open_settings_window', lambda args: ()),
+        'shortcuts open': ('open_keyboard_shortcuts', lambda args: ()),
         'quit': ('quit_app', lambda args: ()),
     }
 
