@@ -130,6 +130,11 @@ def error(message, exit_code=1):
     sys.exit(exit_code)
 
 
+def call_dbus_with(**command):
+    from types import SimpleNamespace
+
+    return call_dbus_method(SimpleNamespace(**command))
+
 def call_dbus_method(args):
     global logger
     logger.info(f'Received args={args}')
