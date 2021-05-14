@@ -86,6 +86,7 @@ def parse_command_line():
         with b.add_command('group'):
             b.add_command('new')
             with b.add_command('change'):
+                # TODO Move 'rofi' option as a flag here
                 b.add_argument('group_name')
             b.add_command('list')
 
@@ -129,7 +130,9 @@ def main():
         import os
         import stickyrofi
 
+        # TODO Turn this variable into a option
         title = 'Change Sticky Group'
+        # TODO Check if rofi is in path
         subprocess.run(['rofi', '-modi', f'{title}:{stickyrofi.__file__}', '-show', f'{title}'])
 
     else:
@@ -158,6 +161,7 @@ def call_dbus_method(args):
     global logger
     logger.info(f'Received args={args}')
 
+    # Use command pattern
     _command_line_to_dbus_method_name = {
         'note activate': ('activate_notes', lambda args: ()),
         'note hide': ('hide_notes', lambda args: ()),
